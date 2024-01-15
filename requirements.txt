@@ -1,0 +1,8 @@
+Django==4
+wheel
+pynose==1.4.8
+whitenoise==6.5.0
+psycopg2==2.8.6
+Pillow
+django-crispy-forms
+crispy-bootstrap4

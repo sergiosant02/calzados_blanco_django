@@ -1,0 +1,151 @@
+<html>
+    <head>
+    {% load static %}
+
+
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+     <!-- Fonts -->
+    
+     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
+     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+     
+
+    <!-- Styles -->
+    <link href="{% static 'core/css/gestion.css'%}" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <!-- Offcanvas -->
+  <div id="sidebar" class="offcanvas offcanvas-start">
+    <div class="offcanvas-header">
+      {% if user.is_authenticated %}
+        <h5 class="font-weight-bold font-weight-bolder">  Bienvenido {{user.username}}</h5>
+        {% else %}
+        <h5 class="font-weight-bold font-weight-bolder">  Bienvenido </h5>
+      {% endif %}
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+      
+    </div>
+    <div class="offcanvas-body">
+      <!-- Enlaces del menú lateral -->
+      <ul class="navbar-nav mx-auto flex-column">
+        <li class="nav-item {% if request.path == '/' %} active {%endif%} px-lg-4">
+          <a class="nav-link text-uppercase text-expanded" href="{% url 'home'%}">Inicio</a>
+        </li>
+        <li class="nav-item {% if request.path == '/services/' %} active {%endif%} px-lg-4">
+          <a class="nav-link text-uppercase text-expanded" href="{% url 'services'%}">Servicios</a>
+        </li>
+        <li class="nav-item {% if request.path == '/shop/' %} active {%endif%} px-lg-4">
+          <a class="nav-link text-uppercase text-expanded" href="{% url 'shop'%}">Tienda</a>
+        </li>
+        <li class="nav-item {% if request.path == '/contact/' %} active {%endif%}m px-lg-4">
+          <a class="nav-link text-uppercase text-expanded" href="{% url 'contact'%}">Contacto</a>
+        </li>
+        <li class="nav-item {% if request.path|slice:':6' == '/blog/' %} active {%endif%} px-lg-4">
+          <a class="nav-link text-uppercase text-expanded" href="{% url 'blog'%}">Blog</a>
+        </li>
+       
+      </ul>
+    </div>
+
+    <div class="offcanvas-footer p-3">
+      <ul class="list-unstyled">
+      {% if user.is_authenticated %}          
+            <li class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'authentication:logout'%}">Cerrar sesión</a>
+            </li>
+            
+            {% else %}
+            <li class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'authentication:login'%}">Iniciar sesión</a>
+            </li>
+            <li class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'authentication:authentication'%}">Registrarse</a>
+            </li>
+            {% endif %}
+      </ul>
+    </div>
+  </div>
+
+
+  
+
+ <!-- Navbar -->
+ <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav">
+   <div style="padding: 0 0 0 10px;">
+    <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+      </svg>
+    </button>
+   </div>
+  <div class="container">
+    <div style="width: 100%; ">
+      <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-flex align-items-center my-auto mx-auto" href="">
+        <span class="mx-auto">{{app_name}}</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+
+ 
+
+  
+    {% block content %}
+    {% endblock %}
+
+  
+    {% block message %}
+    {% endblock %}
+
+
+    <!-- Footer -->
+    <footer class="footer text-faded text-center py-5">
+      <div class="container">
+        <p class="m-0">
+	        <a href="#" class="link">
+	          <span class="fa-stack fa-lg">
+	            <i class="fa fa-circle fa-stack-2x"></i>
+	            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+	          </span>
+	        </a>
+	        <a href="#" class="link">
+	          <span class="fa-stack fa-lg">
+	            <i class="fa fa-circle fa-stack-2x"></i>
+	            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+	          </span>
+	        </a>
+	        <a href="#" class="link">
+	          <span class="fa-stack fa-lg">
+	            <i class="fa fa-circle fa-stack-2x"></i>
+	            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+	          </span>
+	        </a>
+	    </p>
+        <p class="m-0 mbt">
+        	<a href="sample.html" class="link">Política de privacidad</a> ·
+        	<a href="sample.html" class="link">Aviso legal</a> ·
+        	<a href="sample.html" class="link">Cookies</a>
+		</p>
+        <p class="m-0 mbt1">&copy; {{app_name}}</p>
+      </div>
+	</footer>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+
+</body>
+
+
+</html>

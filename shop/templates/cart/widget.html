@@ -1,0 +1,73 @@
+<table class="table table-bordered" style="color: white;">
+    <thead>
+        <tr>
+            <th colspan="3" class="text-center">
+                Carro de compras
+            </th>
+        </tr>
+        <tr>
+            <th>
+                Producto
+            </th>
+            <th>
+                Cantidad
+            </th>
+            <th>
+                Suma
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if request.session.cart.items %}
+            {% for key,value in request.session.cart.items %}
+            <tr>
+                <td>
+                    {{value.product_name}}
+                </td>
+                <td>
+                    {{value.quantity}}
+                </td>
+                
+                <td>
+
+                    <a href="{% url 'shopcart:add' value.product_id %}" class="btn btn-sm btn-success">
+                        +
+                    </a>
+
+                    <a href="{% url 'shopcart:subtract' value.product_id %}" class="btn btn-sm btn-success">
+                        -
+                    </a>
+
+                    {{value.price}}
+
+                </td>
+            </tr>
+            {% endfor %}
+
+        {% else %}
+
+        <tr>
+            <td colspan="3">
+                <div class="alert alert-danger text-center">
+                    Sin productos
+                </div>
+            </td>
+            
+        </tr>
+        {% endif %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                Total: {{total_cost_cart}}
+            </td>
+        </tr>
+        {% if  request.session.cart.items %}
+        <tr>
+            <td colspan="3" style="text-align: center;">
+                <a href="{% url 'orders:order' %}" class="btn btn-success">Hacer pedido</a>
+            </td>
+        </tr>
+        {% endif %}
+    </tfoot>
+</table>
