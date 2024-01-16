@@ -20,19 +20,30 @@ class FirstProductSpecAdminInLine(UpdatingInfoInline):
     inline=[SecondProductSpecAdminInLine]
     extra = 1
 
-class ProductImageAdminInLine(UpdatingInfoInline):
+class ProductImageAdminInLine(admin.TabularInline):
     model = ProductImage
+    fields = ('image', 'created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at', 'image')
+    
     extra = 1 
+    
+    def image(self, obj):
+        # Devuelve una etiqueta HTML con la imagen para mostrarla en el admin
+        return f'<img src="{obj.image.url}" style="max-height: 100px; max-width: 100px;" />'
+
+    # Establece el atributo "image" como seguro (safe) para mostrar HTML
+    image.allow_tags = True
+    image.short_description = 'Imagen'
     
 class ProductCategoryAdmin(admin.ModelAdmin):
     readonly_fields=('created_at', 'updated_at')
     
 class FirstProductAdmin(UpdatingInfoAdmin):
-    inlines=[SecondProductSpecAdminInLine]
+    inlines=[ProductImageAdminInLine, SecondProductSpecAdminInLine]
     
-class ProductAdmin(admin.ModelAdmin):
-    readonly_fields=('created_at', 'updated_at')
-    inlines = [FirstProductSpecAdminInLine, ProductImageAdminInLine]
+class ProductAdmin(UpdatingInfoAdmin):
+    list_display = ['name', 'category', 'created_at', 'updated_at']
+    inlines = [ProductImageAdminInLine, FirstProductSpecAdminInLine]
     
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(Product, ProductAdmin)

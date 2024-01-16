@@ -53,7 +53,7 @@ class FirstProductSpecification(models.Model):
         return SecondProductSpecification.objects.filter(first_spec=self)
     
     def __str__(self):
-        return "%s - %s"%(self.product.name, self.data)
+        return "Producto: %s Especificación: %s"%(self.product.name, self.data)
     
     class Meta:
         verbose_name = "Especificación de producto"
@@ -69,7 +69,7 @@ class SecondProductSpecification(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     
     def __str__(self):
-        return "%s - %s"%(self.first_spec.__str__, self.data)
+        return "%s Extra: %s"%(self.first_spec.__str__, self.data)
     
     class Meta:
         verbose_name = "Especificación extra de producto"
@@ -79,11 +79,18 @@ class SecondProductSpecification(models.Model):
     
 class ProductImage(models.Model):
     image = models.ImageField(upload_to="products/", verbose_name="Imagen")
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Producto")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Producto", null=True, blank=True)
+    first = models.ForeignKey(FirstProductSpecification, on_delete=models.CASCADE, verbose_name="Especificación", null=True, blank=True)
     
     class Meta:
         verbose_name = "Imagen de producto"
         verbose_name_plural = "Imagenes de productos"
+        
+    def __str__(self):
+        feat = "None"
+        if self.first:
+            feat = self.first.data
+        return "imagen de -> producto: %s, especificación: %s"%(self.product.name, feat)
     
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
