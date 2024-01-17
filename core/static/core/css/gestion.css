@@ -309,3 +309,32 @@ ul.errorlist{
 .offcanvas.show {
   left: 0;
 }
+
+.title {
+  font-weight: bold !important;
+}
+
+.card-body{
+  background-color: #f9f9f9 !important;
+  color: black !important;
+  /* Otros estilos para la apariencia del card */
+}
+
+.card-content {
+  cursor: pointer;
+}
+
+.card-content:hover {
+  /* Estilos para resaltar al pasar el ratón */
+  background-color: #f0f0f0;
+}
+
+.card a {
+  text-decoration: none; /* Elimina el subrayado */
+ 
+}
+
+.card a:hover {
+  /* Estilos adicionales para resaltar al pasar el ratón */
+  color: #333; /* Cambia el color del texto al pasar el ratón */
+}

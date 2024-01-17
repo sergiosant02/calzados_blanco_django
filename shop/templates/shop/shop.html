@@ -5,7 +5,7 @@
 
 {% block content %}
       {% if products|length > 0 %}
-      <div class="container" style="width:100%;">
+      <div class="container" style="width:100%; padding: 10px;">
             {% if user.is_authenticated %}
             <div style="float:right;">
 
@@ -18,22 +18,26 @@
                   {% for product in products %}
 
                   <div class="col-md-4">
+                        <a href="{{ product.get_absolute_url }}">
                         <div class="card" style="width: 100%;">
-                              <img class="card-img-top" src="{{ product.image.url }}" alt="" style="height:250px;">
-                              <div class="card-body" style="text-align: center; height:150px;">
-                                    <h7>{{ product.name }}</h7>
-                                    <p class="card-text">{{ product.description }}</p>
-                                    <p class="card-text">{{ product.price }}€</p>
+                                    <div>
+                                    <img class="card-img-top" src="{{ product.image.image.url }}" alt="" style="height:250px;">
+                                    <div class="card-body" style="text-align: center; height:150px;">
+                                          <h7 style="font-weight: bold;">{{ product.name }}</h7>
+                                          <p class="card-text">{{ product.description }}</p>
+                                          <p class="card-text">{{ product.price }}€</p>
+                                    </div>
                               </div>
-                              <div class="card-footer text-center">
-                                    {% if user.is_authenticated %}
-                                    <a href="{% url 'shopcart:add' product.id %}" class="btn btn-success">Agregar al carro</a>
-                                    
-                                    {% else %}
-                                    <a href="{% url 'authentication:login' %}" class="btn btn-success">Iniciar sesión para comprar</a>
-                                    {% endif %}
+                                    <div class="card-footer text-center">
+                                          {% if user.is_authenticated %}
+                                          <a href="{% url 'shopping_cart:add' product.id %}" class="btn btn-success">Agregar al carro</a>
+                                          
+                                          {% else %}
+                                          <a href="{% url 'authentication:login' %}" class="btn btn-success">Iniciar sesión para comprar</a>
+                                          {% endif %}
+                                    </div>
                               </div>
-                        </div>
+                        </a>
             
                   </div>
 

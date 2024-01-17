@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("", views.shop, name="shop"),
+    path('product/<int:id>', views.details, name="product_detail")
     
     
 ]

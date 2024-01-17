@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.urls import reverse
 # Create your models here.
 
 class ProductCategory(models.Model):
@@ -29,6 +30,9 @@ class Product(models.Model):
     @property
     def get_first_specifications(self):
         return FirstProductSpecification.objects.filter(product=self)
+    
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[str(self.id)])
         
 
     class Meta:
